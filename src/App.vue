@@ -58,9 +58,12 @@ body{
   position: relative;
 }
 .container{
-  height: 80%;
+  max-height: 80%;
+  min-height: 80%;
+  overflow: scroll;
   margin: 0;
   padding: 0 10%;
+  overflow-x:hidden;
 }
 
 </style>
