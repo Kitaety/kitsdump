@@ -38,6 +38,9 @@ export default {
   font-family: 'Press Start 2P', cursive;
   font-size: 1vw;
 }
+h1{
+  font-size: 2vw;
+}
 body{
   background: #001100;
   width: 100%;
@@ -59,11 +62,15 @@ body{
 }
 .container{
   max-height: 80%;
-  min-height: 80%;
-  overflow: scroll;
   margin: 0;
   padding: 0 10%;
-  overflow-x:hidden;
 }
-
+.wrap{
+  padding:2%;
+}
+.scroll-x{
+  overflow: scroll;
+  overflow-x:hidden;
+  min-height: 80%;
+}
 </style>

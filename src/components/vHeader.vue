@@ -40,6 +40,7 @@ export default {
     height: inherit;
     padding: 0% 3%;
     text-decoration: none;
+    border: 2px solid transparent;
 }
 .link p{
     margin: 0;
