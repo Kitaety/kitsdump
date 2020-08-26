@@ -13,9 +13,17 @@ let User ={
   phone:'+375295777980',
   email:'danilovitch.ev@gmail.com',
   photo:'https://sun9-3.userapi.com/c638429/v638429399/3b9ba/qof8uJKeSzo.jpg',
-  urls:[
-    {name:'vk',value:'https://vk.com/kitaety'},
-    {name:'github',value:'https://github.com/Kitaety'}
+  contacts:[
+    {type:'vk',value:'https://vk.com/kitaety'},
+    {type:'github',value:'https://github.com/Kitaety'}
+  ],
+  education:[
+    {
+      type: 'Высшее',
+      institution: 'УО "ПолесГУ"',
+      specialty: 'Инженер-программист-экономист'
+    },
+
   ]
 };
 export {User};

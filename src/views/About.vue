@@ -7,64 +7,36 @@
           :style="{width:windowsWidth + 'px', height: photoH + 'px'}">
           <img :src="user.photo" alt="Нет фото">
         </div>
-        <div class="base-info-panel__info">
-          <h1>Основная информация</h1>
-          <div class="info-block">
-            <p class="property">Фамилия:</p>
-            <p class="value">{{user.firstName}}</p>
-          </div>
-          <div class="info-block">
-            <p class="property">Имя:</p>
-            <p class="value">{{user.name}}</p>
-          </div>
-          <div class="info-block">
-            <p class="property">Отчество:</p>
-            <p class="value">{{user.lastName}}</p>
-          </div>
-          <div class="info-block">
-            <p class="property">Дата рождения:</p>
-            <p class="value">{{user.dateBirdth}}</p>
-          </div>
-          <div class="info-block">
-            <p class="property">Гражданство:</p>
-            <p class="value">{{user.citizen}}</p>
-          </div>
-          <div class="info-block">
-            <p class="property">Пол:</p>
-            <p class="value">{{user.sex}}</p>
-          </div>
-          <div class="info-block">
-            <p class="property">Семейное положение:</p>
-            <p class="value">{{user.maritalStatus}}</p>
-          </div>
-        </div>
+        <v-info-panel 
+          name="Основная информация"
+          width="80%"
+          itemWidth="40%"
+          :items="getUserBaseInfo()"
+        />
       </div>
-      <div class="contact-panel">
-        <h1>Контактная информация</h1>
-        <div class="contact-panel__item ">
-          <p>Тел.:</p>
-          <p>{{user.phone}}</p>
-        </div>
-        <div class="contact-panel__item">
-          <p>Email:</p>
-          <p>{{user.email}}</p>
-        </div>
-        <div 
-          class="contact-panel__item" 
-          v-for="(url,index) in user.urls"
-          :key="index"
-          >
-            <p>{{url.name.toUpperCase()}}: </p>
-            <a :href="url.value">{{url.value}}</a>
-          </div>
-      </div>
+      <v-info-panel 
+        name="Контактная информация"
+        width="100%"
+        itemWidth="15%"
+        :items="getUserContactInfo()"
+      />
+      <v-info-panel 
+        name="Образование"
+        width="100%"
+        itemWidth="15%"
+        :items="getUserEducationInfo()"
+      />
     </div>
   </div>
 </template>
 <script>
 import {User} from '../main.js';
+import vInfoPanel from '@/components/vInfoPanel.vue'
 
 export default {
+  components:{
+    vInfoPanel,
+  },
   data:function(){
     return{
       user:User,
@@ -73,10 +45,38 @@ export default {
   },
   computed:{
     photoH:function(){
-      return this.windowsWidth*1.25;
-    }
+      return this.windowsWidth*1.5;
+    },
   },
   methods:{
+    getUserBaseInfo:function(){
+      return [
+        {name:'Фамилия',value:this.user.firstName},
+        {name:'Имя',value:this.user.name},
+        {name:'Отчество',value:this.user.lastName},
+        {name:'Дата рождения',value:this.user.dateBirdth},
+        {name:'Гражданство',value:this.user.citizen},
+        {name:'Пол',value:this.user.sex},
+        {name:'Семейное положение',value:this.user.maritalStatus},
+      ]; 
+    },
+    getUserContactInfo:function(){
+      let contactInfo = [
+        {name:'Тел',value:this.user.phone},
+        {name:'Email',value:this.user.email},
+      ]
+      for(let i=0; i<this.user.contacts.length; i++ ){
+        contactInfo.push({name: this.user.contacts[i].type.toUpperCase(), value :this.user.contacts[i].value, isUrl:true});
+      }
+      return contactInfo; 
+    },
+    getUserEducationInfo:function(){
+      let educationInfo =[];
+      for(let i = 0; i < this.user.education.length; i++){
+        educationInfo.push({name: this.user.education[i].type, value: this.user.education[i].institution + '  ' + this.user.education[i].specialty});
+      }
+      return educationInfo;
+    },
     updateWidth:function(){
       this.windowsWidth=document.documentElement.clientWidth*0.15;
     }
@@ -91,26 +91,9 @@ export default {
 }
 </script>
 <style scoped>
-h1{
-  margin-left: 10%;
-}
-.info-block{
-  display: flex;
-}
-.property{
-  display: block;
-  width: 35%;
-  text-align: left;
-  margin-left: 2%;
-}
 .base-info-panel{
   width: 100%;
   display: flex;
-}
-.base-info-panel__info{
-  width: 80%;
-  height: 100%;
-  display: block;
 }
 .base-info-panel__photo{
   overflow: hidden;
@@ -121,27 +104,5 @@ h1{
   height: 100%;
   transform: scale(1.2);
   object-fit: cover;
-}
-.contact-panel{
-  margin: 2% 0;
-}
-.info-block,
-.contact-panel__item{
-  display:flex;
-  margin: 1% 0;
-}
-.contact-panel__item p{
-  width: 10%;
-  text-align: left;
-  margin-right: 2%;
-}
-.contact-panel__item a{
-  display: block;
-  color:#4f9e00;
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-}
-.contact-panel__item a:hover{
-  border-bottom: 2px solid #4f9e00;
 }
 </style>

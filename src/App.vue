@@ -36,7 +36,7 @@ export default {
 <style>
 *{
   font-family: 'Press Start 2P', cursive;
-  font-size: 1vw;
+  font-size: 1.2vw;
 }
 h1{
   font-size: 2vw;
